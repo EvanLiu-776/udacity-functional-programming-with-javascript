@@ -20,6 +20,44 @@ footer {
   /* footer styles */
 }
 
+div.tab_bar {
+  margin: 16px;
+}
+
+span.rover_name {
+  margin-right: 8px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+span#selected_rover {
+  border-bottom: 5px solid brown;
+}
+
+span.rover_name:hover {
+  background-color: bisque;
+  font-weight: bold;
+}
+
+div.rover_detail img {
+  max-width: 100%;
+}
+
+div.detail_row {
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+}
+
+div.detail_row p:nth-child(1) {
+  font-style: italic;
+}
+
+div.detail_row {
+  max-width: 500px;
+}
+
+
 /* -------------------  TABLET  --------------------- */
 @media (min-width: 768px) {
   /* use mobile */

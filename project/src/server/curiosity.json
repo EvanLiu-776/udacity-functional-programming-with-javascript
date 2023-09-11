@@ -1,0 +1,12 @@
+{
+    "rover": {
+        "id": 5,
+        "name": "Curiosity",
+        "landing_date": "2012-08-06",
+        "launch_date": "2011-11-26",
+        "status": "active",
+        "max_sol": 3942,
+        "max_date": "2023-09-08",
+        "total_photos": 677361
+    }
+}
