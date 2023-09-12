@@ -6,11 +6,15 @@ const updateStore = function name() {
         rovers: { Curiosity: { name: "Curiosity" }, Opportunity: { name: 'Opportunity' }, Spirit: { name: 'Spirit' } },
         selectedRover: 'Curiosity'
     })
+    const render = async (root, state) => {
+        // root.innerHTML = App(state)
+        root.innerHTML = App(state)
+    }
     return function (newState) {
         store = store.mergeDeep(newState)
         const root = document.getElementById('root')
         render(root, store)
-    }
+    }// I believe this is a high order function because it returns a function as result
 }()
 
 
@@ -48,7 +52,7 @@ const App = (state) => {
             <section>
                 <h3>Rovers</h3>
                 <div class="tab_bar">
-                    ${renderRoverName(rovers, state)}
+                    ${renderRoverName(state)(rovers)}
                 </div>
 
                 <div class="rover_detail_container">
@@ -59,10 +63,7 @@ const App = (state) => {
         <footer></footer>`
 }
 
-const render = async (root, state) => {
-    // root.innerHTML = App(state)
-    root.innerHTML = App(state)
-}
+
 
 
 // function roverNameClickHandler(e) {
@@ -77,8 +78,6 @@ const render = async (root, state) => {
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
     updateStore({})
-    const allRoverNames = document.querySelectorAll(".rover_name");
-    // allRoverNames.forEach((roverNameEle) => roverNameEle.addEventListener("click", roverNameClickHandler))
 })
 
 
@@ -98,14 +97,17 @@ const Greeting = (name) => {
     `
 }
 
-const switchTab = (roverName) => {
-    updateStore({ selectedRover: roverName })
-}
+const createSwitchTab = (roverName) => {
+    return () => {
+        updateStore({ selectedRover: roverName })
+    }
+} //high order function as it returns a function as the result
 
-const renderRoverName = (rovers, state) => {
+
+const renderRoverName = (state) => {
     const selectedRover = state.get("selectedRover")
-    return Object.values(rovers).reduce((prev, cur) => prev + `<span class="rover_name" onclick="switchTab('${cur.name}')"  id=${selectedRover === cur.name ? "selected_rover" : ""}>${cur.name}</span>`, "")
-}
+    return (rovers) => Object.values(rovers).reduce((prev, cur) => prev + `<span class="rover_name" onclick="createSwitchTab('${cur.name}')()"  id=${selectedRover === cur.name ? "selected_rover" : ""}>${cur.name}</span>`, "")
+}//high order function as it returns a function as the result 
 
 // Example of a pure function that renders infomation requested from the backend
 const RoverContent = (roverContent) => {
